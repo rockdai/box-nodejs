@@ -1,0 +1,37 @@
+name : nodejs
+version : 0.0.1
+description: Latest Node.js version
+inherits : rockdai/ubuntu12.04-nodejs0.11@0.0.1
+type : main
+platform : ubuntu@12.04
+keywords:
+  - nodejs
+box-detect:
+  priority : 1000
+  version :
+  detect:
+    - files:
+      - package.json
+
+default-build:
+  nodejs:
+    priority : 50
+    detect:
+      - default: true
+    text-to-append: |
+      # Build definition
+      build:
+        # The steps that will be executed on build
+        steps:
+          # A step that executes `npm install` command
+          - npm-install
+          # A step that executes `npm test` command
+          - npm-test
+
+          # A custom script step, name value is used in the UI
+          # and the code value contains the command that get executed
+          - script:
+              name: echo nodejs information
+              code: |
+                echo "node version $(node -v) running"
+                echo "npm version $(npm -v) running"
